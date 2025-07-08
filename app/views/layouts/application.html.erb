@@ -34,6 +34,14 @@
     <main class="container mx-auto px-5 pt-10 pb-20">
       <%= yield %>
     </main>
+
+    <!-- Sticky Footer -->
+    <footer class="bg-gray-50 border-t text-center text-sm text-gray-500 py-4">
+      &copy; <%= Time.current.year %> MHBright. All rights reserved.
+      <%= link_to "Privacy Policy", privacy_path, class: "hover:underline" %> |
+      <%= link_to "Terms", terms_path, class: "hover:underline" %>
+    </footer>
+
   </body>
 </html>
 

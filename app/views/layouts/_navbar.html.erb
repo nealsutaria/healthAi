@@ -1,9 +1,11 @@
 <header class="bg-white shadow-sm border-b border-gray-200">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-16">
-      <!-- Logo -->
+      <!-- Logo (links to homepage or dashboard) -->
       <div>
-        <%= link_to "MHBright", root_path, class: "text-xl font-bold text-indigo-600 hover:text-indigo-700" %>
+        <%= link_to "MHBright",
+              user_signed_in? ? authenticated_root_path : unauthenticated_root_path,
+              class: "text-xl font-bold text-indigo-600 hover:text-indigo-700" %>
       </div>
 
       <!-- Navigation Links -->
@@ -13,7 +15,7 @@
           <%= link_to "My Records", records_path, class: "text-sm font-medium text-gray-700 hover:text-indigo-600" %>
           <%= link_to "➕ New Record", new_record_path, class: "text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded-lg shadow-sm" %>
 
-          <!-- Logout as button link with DELETE method -->
+          <!-- Logout -->
           <%= link_to "Log out", destroy_user_session_path,
                 method: :delete,
                 data: { turbo_method: :delete },
@@ -26,4 +28,5 @@
     </div>
   </div>
 </header>
+
 

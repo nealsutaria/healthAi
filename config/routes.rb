@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'pages/home'
   # Devise routes for users, including Google OmniAuth callbacks
   devise_for :users, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks'
@@ -20,6 +21,20 @@ Rails.application.routes.draw do
   post "chat/clear", to: "chat#clear", as: :clear_chat
 
   # Root page
-  root "records#index"
+  #root "records#index"
+
+  authenticated :user do
+    root to: "records#index", as: :authenticated_root
+  end
+
+  unauthenticated do
+    root to: "pages#home", as: :unauthenticated_root
+  end
+
+  # For the static page
+  get "about", to: "pages#home"
+
+  get "privacy", to: "pages#privacy", as: :privacy
+  get "terms", to: "pages#terms", as: :terms
 end
 
