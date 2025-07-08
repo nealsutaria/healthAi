@@ -9,4 +9,7 @@ eagerLoadControllersFrom("controllers", application)
 // Explicitly register the chat controller
 application.register("chat", ChatController)
 
+import DoctorSuggestionController from "./doctor_suggestion_controller"
+application.register("doctor-suggestion", DoctorSuggestionController)
+
 

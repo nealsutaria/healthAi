@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   }
 
   # Resourceful routes for health records
-  resources :records
+  resources :records do
+    post :doctor_suggestion, on: :member
+  end
 
   # Health check endpoint
   get "up" => "rails/health#show", as: :rails_health_check

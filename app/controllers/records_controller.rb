@@ -1,5 +1,8 @@
+require "net/http"
+require "json"
+
 class RecordsController < ApplicationController
-  before_action :set_record, only: %i[ show edit update destroy ]
+  before_action :set_record, only: %i[show edit update destroy doctor_suggestion]
 
   # GET /records
   def index
@@ -62,6 +65,30 @@ class RecordsController < ApplicationController
     end
   end
 
+  # POST /records/:id/doctor_suggestion
+  def doctor_suggestion
+    authorize_record!
+
+    # Create Gemini prompt with full record context
+    prompt = <<~TEXT
+      Health Record Summary:
+      Date: #{@record.date}
+      Reason for visit: #{@record.reason}
+      Prescription: #{@record.prescription? ? "Yes – #{@record.prescription_name}" : "No"}
+      X-ray done: #{@record.xray_done? ? "Yes" : "No"}
+      Test done: #{@record.test_done? ? "Yes – #{@record.test_type}" : "No"}
+      Doctor rating (out of 5): #{@record.doctor_rating}
+      Comments from patient: #{@record.comments.presence || "None"}
+
+      Based on this health record, does the patient need to follow up with a doctor soon?
+      Be brief and clear. Give one helpful recommendation in plain language.
+    TEXT
+
+    suggestion = fetch_gemini_response(prompt)
+
+    render json: { suggestion: suggestion }
+  end
+
   private
 
     def set_record
@@ -73,7 +100,24 @@ class RecordsController < ApplicationController
     end
 
     def record_params
-      params.require(:record).permit(:date, :reason, :image, :prescription, :prescription_name, :xray_done, :test_done, :test_type, :doctor_rating, :comments)
+      params.require(:record).permit(
+        :date, :reason, :image, :prescription, :prescription_name,
+        :xray_done, :test_done, :test_type, :doctor_rating, :comments
+      )
+    end
+
+    def fetch_gemini_response(prompt)
+      api_key = Rails.application.credentials.gemini_api_key
+      uri = URI("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=#{api_key}")
+      headers = { "Content-Type" => "application/json" }
+      body = {
+        contents: [{ parts: [{ text: prompt }] }]
+      }.to_json
+
+      response = Net::HTTP.post(uri, body, headers)
+      json = JSON.parse(response.body)
+      json.dig("candidates", 0, "content", "parts", 0, "text") || "⚠️ AI could not generate a response."
     end
 end
+
 

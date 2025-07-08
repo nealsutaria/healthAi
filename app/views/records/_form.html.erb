@@ -98,7 +98,10 @@
   <!-- Doctor Rating -->
   <div>
     <%= form.label :doctor_rating, class: "block text-sm font-semibold text-gray-700" %>
-    <%= form.number_field :doctor_rating, in: 1..5, class: "mt-1 block w-24 rounded-lg border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm px-3 py-2" %>
+    <%= form.select :doctor_rating,
+          options_for_select(1..5, selected: record.doctor_rating),
+          {},
+          class: "mt-1 block w-28 rounded-lg border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-sm px-3 py-2" %>
   </div>
 
   <!-- Comments -->
