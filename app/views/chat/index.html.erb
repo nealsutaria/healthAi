@@ -1,0 +1,74 @@
+<%= content_for :title, "AI Health Chatbot" %>
+
+<div class="flex justify-center items-center min-h-screen bg-gray-100 px-2">
+  <div
+    data-controller="chat"
+    class="w-full max-w-2xl bg-white rounded-2xl shadow-xl flex flex-col relative h-[90vh] my-4 sm:my-8"
+  >
+    <!-- Disclaimer -->
+    <div class="bg-yellow-50 text-yellow-800 px-6 py-3 text-sm border-b border-yellow-300 text-center font-medium">
+      ⚠️ I am an AI assistant and not a medical professional. Always consult a licensed doctor for medical advice.
+    </div>
+
+    <!-- Messages Area -->
+    <div
+      id="chat-messages"
+      data-chat-target="messages"
+      class="overflow-y-auto px-4 py-6 flex flex-col gap-4"
+      style="height: calc(90vh - 240px);" <!-- Adjusted to account for Clear button height -->
+
+      <% @messages.each do |msg| %>
+        <div class="<%= msg.role == 'user' ? 'self-end bg-blue-600 text-white' : 'self-start bg-gray-100 text-gray-900' %> max-w-[80%] px-4 py-3 rounded-2xl break-words whitespace-pre-wrap text-sm sm:text-base shadow-sm">
+          <%= simple_format(msg.content) %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div
+      id="loading-indicator"
+      data-chat-target="loading"
+      class="hidden justify-center items-center py-2"
+    >
+      <div class="w-6 h-6 border-4 border-blue-200 border-l-blue-500 rounded-full animate-spin"></div>
+    </div>
+
+    <!-- Clear Conversation Button -->
+    <div class="px-4 pb-2 text-right">
+      <%= button_to "🗑️ Clear Conversation", clear_chat_path, method: :post, class: "text-sm text-red-600 hover:text-red-800 font-medium transition", data: { turbo: false } %>
+    </div>
+
+    <!-- Input Bar -->
+    <div class="p-4 border-t bg-white flex items-center gap-3">
+      <input
+        type="text"
+        id="user-input"
+        data-chat-target="input"
+        data-action="keydown.enter->chat#send"
+        placeholder="Ask a health-related question..."
+        class="flex-grow px-4 py-3 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-200 outline-none"
+      />
+      <button
+        id="send-button"
+        data-chat-target="send"
+        data-action="click->chat#send"
+        class="px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-xl font-semibold transition"
+      >
+        Send
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+

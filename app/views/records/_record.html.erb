@@ -1,0 +1,66 @@
+<div id="<%= dom_id record %>" class="space-y-6">
+  <div>
+    <p class="text-sm text-gray-500">Date</p>
+    <p class="text-lg font-semibold text-gray-900"><%= record.date.strftime("%B %d, %Y") %></p>
+  </div>
+
+  <div>
+    <p class="text-sm text-gray-500">Reason</p>
+    <p class="text-lg font-semibold text-gray-900"><%= record.reason %></p>
+  </div>
+
+  <% if record.image.attached? %>
+    <div>
+      <p class="text-sm text-gray-500">Image</p>
+      <div class="mt-2">
+        <% cloudinary_url = record.image.url.sub("/upload/", "/upload/w_400,c_fill/") %>
+        <%= image_tag cloudinary_url, class: "rounded-lg shadow max-w-full h-auto border border-gray-200 object-cover" %>
+      </div>
+    </div>
+  <% end %>
+
+  <div>
+    <p class="text-sm text-gray-500">Prescription</p>
+    <p class="text-lg font-semibold text-gray-900"><%= record.prescription? ? "Yes" : "No" %></p>
+  </div>
+
+  <% if record.prescription_name.present? %>
+    <div>
+      <p class="text-sm text-gray-500">Prescription Name</p>
+      <p class="text-lg font-semibold text-gray-900"><%= record.prescription_name %></p>
+    </div>
+  <% end %>
+
+  <div>
+    <p class="text-sm text-gray-500">X-ray Done</p>
+    <p class="text-lg font-semibold text-gray-900"><%= record.xray_done? ? "Yes" : "No" %></p>
+  </div>
+
+  <div>
+    <p class="text-sm text-gray-500">Test Done</p>
+    <p class="text-lg font-semibold text-gray-900"><%= record.test_done? ? "Yes" : "No" %></p>
+  </div>
+
+  <% if record.test_type.present? %>
+    <div>
+      <p class="text-sm text-gray-500">Test Type</p>
+      <p class="text-lg font-semibold text-gray-900"><%= record.test_type %></p>
+    </div>
+  <% end %>
+
+  <% if record.doctor_rating.present? %>
+    <div>
+      <p class="text-sm text-gray-500">Doctor Rating</p>
+      <p class="text-lg font-semibold text-gray-900"><%= record.doctor_rating %> / 5</p>
+    </div>
+  <% end %>
+
+  <% if record.comments.present? %>
+    <div>
+      <p class="text-sm text-gray-500">Comments</p>
+      <p class="text-gray-800 text-base mt-1 whitespace-pre-line"><%= record.comments %></p>
+    </div>
+  <% end %>
+</div>
+
+

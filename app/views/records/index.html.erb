@@ -1,0 +1,77 @@
+<% content_for :title, "Health Records" %>
+
+<div class="max-w-6xl mx-auto px-4 py-10">
+  <% if notice.present? %>
+    <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-md shadow mb-6">
+      <%= notice %>
+    </div>
+  <% end %>
+
+  <!-- Page Header -->
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+    <div>
+      <h1 class="text-4xl font-bold text-gray-900">🩺 Your Health Records</h1>
+      <p class="mt-1 text-sm text-gray-500">Track your visits, tests, and prescriptions with ease and clarity.</p>
+    </div>
+
+  </div>
+
+  <!-- Record List -->
+  <% if @records.any? %>
+    <div class="space-y-6">
+      <% @records.each do |record| %>
+        <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-100">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+
+            <!-- Image thumbnail if exists -->
+            <% if record.image.attached? %>
+              <div class="flex-shrink-0">
+                <%= image_tag record.image.url.sub("/upload/", "/upload/w_150,h_100,c_fill/"),
+                      class: "w-[150px] h-[100px] rounded-md border border-gray-200 shadow-sm object-cover",
+                      alt: "Uploaded health record image" %>
+              </div>
+            <% end %>
+
+            <!-- Record summary -->
+            <div class="flex-1 space-y-1">
+              <p class="text-sm text-gray-500">Visit Date:</p>
+              <p class="text-lg font-semibold text-gray-900"><%= record.date.strftime("%B %d, %Y") %></p>
+
+              <p class="text-sm text-gray-500">Reason:</p>
+              <p class="text-base text-gray-700"><%= record.reason %></p>
+
+              <% if record.prescription? && record.prescription_name.present? %>
+                <p class="text-sm text-gray-500">Prescription:</p>
+                <p class="text-base text-gray-700"><%= record.prescription_name %></p>
+              <% end %>
+
+              <% if record.test_done? && record.test_type.present? %>
+                <p class="text-sm text-gray-500">Test:</p>
+                <p class="text-base text-gray-700"><%= record.test_type %></p>
+              <% end %>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 sm:ml-4 w-full sm:w-auto">
+              <%= link_to "Show", record, class: "px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-center text-sm font-medium text-gray-800" %>
+              <%= link_to "Edit", edit_record_path(record), class: "px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-center text-sm font-medium text-gray-800" %>
+              <%= button_to "Delete", record,
+                    method: :delete,
+                    data: { turbo_confirm: "Are you sure?" },
+                    class: "px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-sm font-medium text-white text-center" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center mt-16 text-gray-500 text-lg">
+      No records found. Start by adding your first one!
+    </div>
+  <% end %>
+</div>
+
+
+
+
+

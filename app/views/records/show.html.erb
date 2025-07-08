@@ -1,0 +1,22 @@
+<% content_for :title, "Health Record" %>
+
+<div class="max-w-4xl mx-auto px-4 py-10">
+  <% if notice.present? %>
+    <div class="bg-green-50 text-green-700 px-4 py-3 rounded-md mb-6 shadow">
+      <%= notice %>
+    </div>
+  <% end %>
+
+  <h1 class="text-4xl font-bold mb-6 text-gray-900">🩺 Health Record</h1>
+
+  <div class="bg-white shadow-lg rounded-2xl p-6 space-y-6 border">
+    <%= render @record %>
+  </div>
+
+  <div class="mt-10 flex flex-col sm:flex-row gap-4">
+    <%= link_to "✏️ Edit", edit_record_path(@record), class: "px-5 py-3 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold text-center" %>
+    <%= link_to "📋 All Records", records_path, class: "px-5 py-3 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold text-center" %>
+    <%= button_to "🗑️ Delete", @record, method: :delete, form_class: "inline", class: "px-5 py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-semibold text-center", data: { turbo_confirm: "Are you sure you want to delete this record?" } %>
+  </div>
+</div>
+

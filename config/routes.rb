@@ -1,10 +1,23 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  # Devise routes for users, including Google OmniAuth callbacks
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'users/omniauth_callbacks'
+  }
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  # Resourceful routes for health records
+  resources :records
+
+  # Health check endpoint
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  # Route for the main chat page
+  get 'chat', to: 'chat#index', as: :chat
+
+  # Route for handling sending messages to the AI bot
+  post 'chat/send_message', to: 'chat#send_message', as: :send_chat_message
+  post "chat/clear", to: "chat#clear", as: :clear_chat
+
+  # Root page
+  root "records#index"
 end
+

@@ -1,0 +1,55 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-50 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+    <div class="mb-6 text-center">
+      <h2 class="text-3xl font-bold text-gray-900">Create your account</h2>
+      <p class="text-sm text-gray-500 mt-2">Track your health, securely and easily</p>
+    </div>
+
+    <%= form_with(model: resource, as: resource_name, url: registration_path(resource_name), class: "space-y-6", local: true) do |form| %>
+      <%= devise_error_messages! %>
+
+      <div>
+        <%= form.label :email, class: "block text-sm font-medium text-gray-700" %>
+        <%= form.email_field :email, autofocus: true, required: true, class: "mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+      </div>
+
+      <div>
+        <%= form.label :password, class: "block text-sm font-medium text-gray-700" %>
+        <%= form.password_field :password, required: true, class: "mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+      </div>
+
+      <div>
+        <%= form.label :password_confirmation, class: "block text-sm font-medium text-gray-700" %>
+        <%= form.password_field :password_confirmation, required: true, class: "mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+      </div>
+
+      <div>
+        <%= form.submit "Sign up", class: "w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-500 font-semibold text-sm" %>
+      </div>
+    <% end %>
+
+    <div class="mt-6">
+      <%= button_to user_google_oauth2_omniauth_authorize_path,
+          method: :get,
+          form: { data: { turbo: "false" } },
+          class: "w-full inline-flex justify-center items-center gap-2 py-2 px-4 border border-gray-300 rounded-md bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 shadow-sm" do %>
+        <svg class="h-5 w-5" viewBox="0 0 533.5 544.3" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#4285f4" d="M533.5 278.4c0-17.6-1.6-34.6-4.6-51H272v96.7h146.9c-6.4 34.3-25.7 63.4-54.9 83.1v68h88.8c52.1-48 81.7-118.7 81.7-196.8z"/>
+          <path fill="#34a853" d="M272 544.3c73.8 0 135.6-24.5 180.8-66.6l-88.8-68c-24.6 16.5-56.1 26.4-92 26.4-70.8 0-130.8-47.9-152.4-112.3H27.2v70.4c45.3 89.6 138.6 150.1 244.8 150.1z"/>
+          <path fill="#fbbc04" d="M119.6 323.8c-10.3-30.4-10.3-63.2 0-93.6v-70.4H27.2c-36.2 70.4-36.2 153.6 0 224z"/>
+          <path fill="#ea4335" d="M272 107.7c38.6 0 73.2 13.3 100.6 39.4l75.4-75.4C407.6 24.7 344.8 0 272 0 165.8 0 72.5 60.5 27.2 150.1l92.4 70.4C141.2 155.6 201.2 107.7 272 107.7z"/>
+        </svg>
+        Sign up with Google
+      <% end %>
+    </div>
+
+    <div class="text-center mt-6 text-sm text-gray-500">
+      Already have an account?
+      <%= link_to "Log in", new_user_session_path, class: "text-indigo-600 hover:underline font-medium" %>
+    </div>
+  </div>
+</div>
+
+
+
+

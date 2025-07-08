@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2025-06-24
+  reason: MyString
+  prescription: false
+  prescription_name: MyString
+  xray_done: false
+  test_done: false
+  test_type: MyString
+  doctor_rating: 1
+  comments: MyText
+
+two:
+  date: 2025-06-24
+  reason: MyString
+  prescription: false
+  prescription_name: MyString
+  xray_done: false
+  test_done: false
+  test_type: MyString
+  doctor_rating: 1
+  comments: MyText
