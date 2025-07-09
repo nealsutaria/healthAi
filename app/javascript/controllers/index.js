@@ -12,4 +12,7 @@ application.register("chat", ChatController)
 import DoctorSuggestionController from "./doctor_suggestion_controller"
 application.register("doctor-suggestion", DoctorSuggestionController)
 
+import MobileNavController from "./mobile_nav_controller"
+application.register("mobile-nav", MobileNavController)
+
 

@@ -1,56 +1,47 @@
 <div class="min-h-screen bg-white flex flex-col">
 
-  <!-- Main Hero Content -->
-  <main class="flex-grow max-w-7xl mx-auto px-6 py-20">
-    <div class="text-center mb-20">
-      <h2 class="text-5xl font-bold text-gray-900 mb-4 leading-tight">Your Health Records, Smarter.</h2>
-      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-        MHBright is your personal AI-powered health dashboard. Securely track doctor visits, prescriptions, and tests — and get instant insights powered by AI.
+  <!-- Hero Section -->
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+    <div class="text-center mb-16">
+      <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight">
+        Your Health Records, Smarter.
+      </h1>
+      <p class="mt-4 text-base sm:text-lg text-gray-600 max-w-xl mx-auto">
+        MHBright is your personal AI-powered health dashboard. Track visits, prescriptions, and get instant insights — securely and privately.
       </p>
     </div>
 
-    <!-- Feature Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-      <div class="p-6 rounded-2xl shadow border hover:shadow-lg transition bg-white">
-        <div class="text-4xl mb-4">🧠</div>
-        <h3 class="text-xl font-semibold mb-2">AI Doctor Suggestions</h3>
-        <p class="text-sm text-gray-600">Get alerts on when to follow up with your doctor based on your records and symptoms.</p>
-      </div>
+    <!-- Features Grid (3 per row on mobile) -->
+    <div class="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+      <% features = [
+        ["🧠", "AI Doctor Suggestions", "Get follow-up alerts from Gemini based on your records and symptoms."],
+        ["📸", "Image Scan Insights", "Upload test results or prescriptions — Gemini will explain them."],
+        ["💊", "Smart Record Storage", "Organize and store all your health records securely."],
+        ["🔒", "Secure & Private", "Your data is encrypted and belongs only to you. No ads or tracking."],
+        ["💬", "24/7 AI Health Chat", "Ask health questions anytime and get instant AI-powered answers."]
+      ] %>
 
-      <div class="p-6 rounded-2xl shadow border hover:shadow-lg transition bg-white">
-        <div class="text-4xl mb-4">📸</div>
-        <h3 class="text-xl font-semibold mb-2">Image Scan Insights</h3>
-        <p class="text-sm text-gray-600">Upload test results or prescriptions — Gemini will explain what they mean.</p>
-      </div>
-
-      <div class="p-6 rounded-2xl shadow border hover:shadow-lg transition bg-white">
-        <div class="text-4xl mb-4">💊</div>
-        <h3 class="text-xl font-semibold mb-2">Smart Record Storage</h3>
-        <p class="text-sm text-gray-600">Keep all your medical records and notes organized and easy to find.</p>
-      </div>
-
-      <div class="p-6 rounded-2xl shadow border hover:shadow-lg transition bg-white">
-        <div class="text-4xl mb-4">🔒</div>
-        <h3 class="text-xl font-semibold mb-2">Secure & Private</h3>
-        <p class="text-sm text-gray-600">Your data is encrypted and only accessible by you. No ads. No trackers.</p>
-      </div>
-
-      <div class="p-6 rounded-2xl shadow border hover:shadow-lg transition bg-white">
-        <div class="text-4xl mb-4">💬</div>
-        <h3 class="text-xl font-semibold mb-2">AI Chat Support</h3>
-        <p class="text-sm text-gray-600">Ask health-related questions and get instant responses — 24/7.</p>
-      </div>
+      <% features.each do |icon, title, desc| %>
+        <div class="p-4 sm:p-6 bg-white rounded-2xl shadow border hover:shadow-lg transition text-center">
+          <div class="text-3xl sm:text-4xl mb-2"><%= icon %></div>
+          <h3 class="text-xs sm:text-base font-semibold mb-1"><%= title %></h3>
+          <p class="text-[10px] sm:text-sm text-gray-600 leading-snug"><%= desc %></p>
+        </div>
+      <% end %>
     </div>
 
-    <!-- Call to Action Buttons -->
-    <div class="mt-20 text-center space-y-4">
+    <!-- Call to Action -->
+    <div class="mt-16 text-center space-y-4">
       <%= link_to "Create Your Free Account →", new_user_registration_path,
-            class: "inline-block bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-8 py-3 rounded-xl text-lg transition" %><br>
+            class: "inline-block w-full sm:w-auto bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-6 py-3 rounded-xl text-sm sm:text-lg transition" %>
 
-      <%= link_to "Already have an account? Log In", new_user_session_path,
-            class: "inline-block text-indigo-600 hover:text-indigo-700 text-sm font-medium" %>
+      <div>
+        <%= link_to "Already have an account? Log In", new_user_session_path,
+              class: "text-indigo-600 hover:text-indigo-700 text-sm font-medium" %>
+      </div>
     </div>
   </main>
 </div>
+
 
 

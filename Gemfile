@@ -82,3 +82,5 @@ gem 'omniauth-rails_csrf_protection'
 
 gem 'gemini-ai', '~> 4.2'
 
+gem 'mini_magick'
+

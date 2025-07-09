@@ -1,9 +1,12 @@
 require "net/http"
 require "json"
+require "open-uri"
+require "base64"
+require "mini_magick"
 
 class RecordsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_record, only: %i[show edit update destroy doctor_suggestion]
+  before_action :set_record, only: %i[show edit update destroy doctor_suggestion analyze_image]
 
   # GET /records
   def index
@@ -70,7 +73,6 @@ class RecordsController < ApplicationController
   def doctor_suggestion
     authorize_record!
 
-    # Create Gemini prompt with full record context
     prompt = <<~TEXT
       Health Record Summary:
       Date: #{@record.date}
@@ -86,8 +88,63 @@ class RecordsController < ApplicationController
     TEXT
 
     suggestion = fetch_gemini_response(prompt)
-
     render json: { suggestion: suggestion }
+  end
+
+  # POST /records/:id/analyze_image
+  def analyze_image
+    authorize_record!
+
+    unless @record.image.attached?
+      redirect_to @record, alert: "No image attached to analyze."
+      return
+    end
+
+    begin
+      # Download image and resize
+      downloaded_file = URI.open(@record.image.url)
+      image = MiniMagick::Image.read(downloaded_file)
+      image.resize "800x800>"
+      base64_image = Base64.strict_encode64(image.to_blob)
+
+      api_key = Rails.application.credentials.gemini_api_key
+      uri = URI("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=#{api_key}")
+
+      body = {
+        contents: [
+          {
+            parts: [
+              { text: "Please analyze and explain this medical image clearly." },
+              {
+                inline_data: {
+                  mime_type: "image/jpeg",
+                  data: base64_image
+                }
+              }
+            ]
+          }
+        ]
+      }
+
+      headers = { "Content-Type" => "application/json" }
+
+      response = Net::HTTP.post(uri, body.to_json, headers)
+      json = JSON.parse(response.body)
+
+      result = json.dig("candidates", 0, "content", "parts", 0, "text")
+      if result.present?
+        @record.update(analysis: result)
+        flash[:notice] = "Image analyzed successfully."
+      else
+        flash[:alert] = "Gemini could not analyze the image."
+        Rails.logger.error "Gemini error: #{json.inspect}"
+      end
+    rescue => e
+      Rails.logger.error "Gemini image analysis failed: #{e.message}"
+      flash[:alert] = "Something went wrong while analyzing the image."
+    end
+
+    redirect_to @record
   end
 
   private
@@ -120,5 +177,6 @@ class RecordsController < ApplicationController
       json.dig("candidates", 0, "content", "parts", 0, "text") || "⚠️ AI could not generate a response."
     end
 end
+
 
 

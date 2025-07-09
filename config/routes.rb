@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   # Resourceful routes for health records
   resources :records do
     post :doctor_suggestion, on: :member
+    post :analyze_image, on: :member
   end
 
   # Health check endpoint
