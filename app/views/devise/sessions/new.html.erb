@@ -1,10 +1,12 @@
-<div class="min-h-screen flex items-center justify-center bg-gray-50 px-4 sm:px-6 lg:px-8">
+<div class="h-screen overflow-auto flex items-center justify-center bg-gray-50 px-4 sm:px-6 lg:px-8 pt-6 pb-10">
   <div class="max-w-md w-full bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+    <!-- Heading -->
     <div class="mb-6 text-center">
       <h2 class="text-3xl font-bold text-gray-900">Welcome back</h2>
       <p class="text-sm text-gray-500 mt-2">Log in to your health dashboard</p>
     </div>
 
+    <!-- Login Form -->
     <%= form_with(scope: :user, url: session_path(:user), class: "space-y-6", local: true) do |form| %>
       <div>
         <%= form.label :email, class: "block text-sm font-medium text-gray-700" %>
@@ -29,6 +31,7 @@
       </div>
     <% end %>
 
+    <!-- Google Sign In -->
     <div class="mt-6">
       <%= link_to user_google_oauth2_omniauth_authorize_path, class: "w-full inline-flex justify-center items-center gap-2 py-2 px-4 border border-gray-300 rounded-md bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 shadow-sm" do %>
         <svg class="h-5 w-5" viewBox="0 0 533.5 544.3" xmlns="http://www.w3.org/2000/svg">
@@ -41,10 +44,12 @@
       <% end %>
     </div>
 
+    <!-- Sign Up Link -->
     <div class="text-center mt-6 text-sm text-gray-500">
       Don't have an account?
       <%= link_to "Sign up", new_user_registration_path, class: "text-indigo-600 hover:underline font-medium" %>
     </div>
   </div>
 </div>
+
 

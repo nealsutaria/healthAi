@@ -96,4 +96,26 @@ Rails.application.configure do
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
   config.active_storage.service = :cloudinary
+
+  config.action_mailer.raise_delivery_errors = true
+
+  config.action_mailer.delivery_method = :smtp
+
+  config.action_mailer.smtp_settings = {
+    address:              "smtp.gmail.com",
+    port:                 587,
+    domain:               "mhbright.com",
+    user_name:            Rails.application.credentials.dig(:gmail, :user_name),
+    password:             Rails.application.credentials.dig(:gmail, :password),
+    authentication:       :plain,
+    enable_starttls_auto: true
+  }
+
+  config.action_mailer.default_url_options = {
+    host: "mhbright.com",
+    protocol: "https"
+  }
+
+  config.action_mailer.asset_host = "https://mhbright.com"
+
 end
