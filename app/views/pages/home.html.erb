@@ -1,45 +1,46 @@
-<div class="min-h-screen bg-white flex flex-col justify-start items-center px-4 sm:px-6 lg:px-8">
+<div class="bg-white flex flex-col items-center px-4 sm:px-6 lg:px-8 pt-4 sm:pt-10">
 
   <!-- Hero Section -->
-  <main class="py-8 sm:py-16 lg:py-20 text-center w-full max-w-2xl">
-    <h1 class="text-2xl sm:text-5xl font-extrabold text-gray-900 leading-tight tracking-tight mb-3">
+  <main class="text-center w-full max-w-2xl">
+    <h1 class="text-xl sm:text-4xl font-extrabold text-gray-900 leading-snug tracking-tight mb-2">
       Your Health Records, Smarter.
     </h1>
-    <p class="text-sm sm:text-lg text-gray-600 mb-6">
-      MHBright is your AI-powered health dashboard — track visits, upload results, and get personalized insights. Private. Secure. Instant.
+    <p class="text-xs sm:text-base text-gray-600 mb-4 leading-snug">
+      MHBright is your AI-powered health dashboard — track visits, upload results, and get personalized insights.
     </p>
 
     <!-- CTA Buttons -->
-    <div class="flex flex-col sm:flex-row justify-center items-center gap-3">
+    <div class="flex flex-col sm:flex-row justify-center items-center gap-2">
       <%= link_to "Create Your Free Account", new_user_registration_path,
-            class: "w-full sm:w-auto bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-5 py-2.5 rounded-xl text-sm sm:text-base transition shadow" %>
+            class: "w-full sm:w-auto bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-4 py-2 rounded-lg text-xs sm:text-sm transition shadow" %>
 
       <%= link_to "Log In", new_user_session_path,
-            class: "text-indigo-600 hover:underline font-medium text-sm sm:text-base" %>
+            class: "text-indigo-600 hover:underline font-medium text-xs sm:text-sm" %>
     </div>
   </main>
 
-  <!-- Features Section: Compact Grid for Mobile -->
-  <section class="w-full max-w-md sm:max-w-5xl mt-4 sm:mt-10 pb-8 sm:pb-12 transition-all duration-300">
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-6">
+  <!-- Features Section: Tight Mobile Layout -->
+  <section class="w-full max-w-md sm:max-w-5xl mt-4 sm:mt-8 pb-4 sm:pb-10">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-2 sm:gap-4">
       <% features = [
-        ["🧠", "AI Doctor Suggestions", "Get alerts from AI based on your symptoms & visits."],
-        ["📸", "Image Scan Insights", "Upload test results or prescriptions — AI explains them."],
-        ["💬", "24/7 AI Health Chat", "Ask health questions anytime, powered by AI."],
-        ["🔒", "Secure & Private", "End-to-end encrypted. You own your data. No ads."],
-        ["💊", "Smart Record Storage", "Keep all your health data organized, accessible & safe."]
+        ["🧠", "AI Doctor Suggestions", "AI alerts based on symptoms & visits."],
+        ["📸", "Image Scan Insights", "Upload results — AI explains them."],
+        ["💬", "24/7 AI Chat", "Ask health questions anytime."],
+        ["🔒", "Secure & Private", "End-to-end encrypted. No ads."],
+        ["💊", "Smart Records", "Organized, accessible health data."]
       ] %>
 
       <% features.each do |icon, title, desc| %>
-        <div class="bg-gray-50 rounded-xl p-3 sm:p-5 text-center border hover:shadow-sm transition">
-          <div class="text-2xl sm:text-3xl mb-1"><%= icon %></div>
-          <h3 class="text-xs sm:text-sm font-semibold text-gray-900 mb-1 leading-tight"><%= title %></h3>
-          <p class="text-[10px] sm:text-xs text-gray-600 leading-snug"><%= desc %></p>
+        <div class="bg-gray-50 rounded-lg p-3 sm:p-4 text-center border hover:shadow transition">
+          <div class="text-xl sm:text-2xl mb-1"><%= icon %></div>
+          <h3 class="text-[11px] sm:text-sm font-semibold text-gray-900 mb-0.5 leading-tight"><%= title %></h3>
+          <p class="text-[10px] sm:text-xs text-gray-600 leading-tight"><%= desc %></p>
         </div>
       <% end %>
     </div>
   </section>
 </div>
+
 
 
 
