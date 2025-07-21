@@ -21,7 +21,7 @@ export default class extends Controller {
     this.sendTarget.disabled = true
     this.loadingTarget.classList.remove("hidden")
 
-    fetch("/chat/send_message", {
+    fetch(`${window.location.origin}/chat/send_message`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
