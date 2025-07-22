@@ -112,10 +112,10 @@ Rails.application.configure do
   }
 
   config.action_mailer.default_url_options = {
-    host: "mhbright.com",
+    host: "www.mhbright.com",
     protocol: "https"
   }
 
-  config.action_mailer.asset_host = "https://mhbright.com"
+  config.action_mailer.asset_host = "https://www.mhbright.com"
 
 end
