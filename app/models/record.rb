@@ -6,6 +6,9 @@ class Record < ApplicationRecord
   validates :date, :reason, presence: true
   before_save :clear_analysis_if_image_changed
 
+  has_many :health_memories, dependent: :destroy
+  has_many :health_insights, dependent: :destroy
+
   private
 
   def clear_analysis_if_image_changed

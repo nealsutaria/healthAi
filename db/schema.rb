@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_09_005612) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_13_235537) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,6 +40,34 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_09_005612) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "health_insights", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "record_id", null: false
+    t.string "title"
+    t.text "body"
+    t.string "severity"
+    t.string "status"
+    t.string "source"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["record_id"], name: "index_health_insights_on_record_id"
+    t.index ["user_id"], name: "index_health_insights_on_user_id"
+  end
+
+  create_table "health_memories", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "record_id", null: false
+    t.string "category"
+    t.string "title"
+    t.text "value"
+    t.date "source_date"
+    t.integer "confidence"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["record_id"], name: "index_health_memories_on_record_id"
+    t.index ["user_id"], name: "index_health_memories_on_user_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -84,6 +112,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_09_005612) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "health_insights", "records"
+  add_foreign_key "health_insights", "users"
+  add_foreign_key "health_memories", "records"
+  add_foreign_key "health_memories", "users"
   add_foreign_key "messages", "users"
   add_foreign_key "records", "users"
 end

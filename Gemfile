@@ -84,3 +84,5 @@ gem 'gemini-ai', '~> 4.2'
 
 gem 'mini_magick'
 
+gem "ruby_llm"
+
