@@ -34,6 +34,9 @@ class RecordsController < ApplicationController
 
     respond_to do |format|
       if @record.save
+        HealthCopilot::SaveRecordMemoriesService.new(@record).call
+        HealthCopilot::GenerateInsightsService.new(current_user).call
+
         format.html { redirect_to @record, notice: "Record was successfully created." }
         format.json { render :show, status: :created, location: @record }
       else
@@ -49,6 +52,9 @@ class RecordsController < ApplicationController
 
     respond_to do |format|
       if @record.update(record_params)
+        HealthCopilot::SaveRecordMemoriesService.new(@record).call
+        HealthCopilot::GenerateInsightsService.new(current_user).call
+
         format.html { redirect_to @record, notice: "Record was successfully updated." }
         format.json { render :show, status: :ok, location: @record }
       else

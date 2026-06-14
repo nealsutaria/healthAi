@@ -95,7 +95,13 @@ module HealthCopilot
 
     def parse_json(raw_response)
       clean_response = raw_response.gsub(/```json|```/, "").strip
+
       JSON.parse(clean_response)
+    rescue JSON::ParserError => e
+      Rails.logger.error "HealthCopilot JSON parse failed: #{e.message}"
+      Rails.logger.error "Raw response: #{raw_response}"
+
+      { "memories" => [] }
     end
   end
 end

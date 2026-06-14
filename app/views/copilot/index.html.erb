@@ -1,0 +1,90 @@
+<% content_for :title, "AI Health Copilot" %>
+
+<div class="max-w-6xl mx-auto px-4 py-10">
+  <div class="mb-8">
+    <h1 class="text-4xl font-bold text-gray-900">🧠 AI Health Copilot</h1>
+    <p class="mt-2 text-sm text-gray-500">
+      Your Copilot reviews your saved health records and highlights patterns, follow-ups, and important health memories.
+    </p>
+  </div>
+
+  <!-- Safety note -->
+  <div class="mb-8 bg-blue-50 border border-blue-200 text-blue-800 px-4 py-3 rounded-xl">
+    <p class="text-sm">
+      MHBright does not provide medical diagnosis or treatment. Use these insights to prepare for conversations with your healthcare provider.
+    </p>
+  </div>
+
+  <!-- Insights -->
+  <section class="mb-10">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-2xl font-bold text-gray-900">AI Insights</h2>
+      <span class="text-sm text-gray-500"><%= @insights.count %> insights</span>
+    </div>
+
+    <% if @insights.any? %>
+      <div class="grid gap-4 md:grid-cols-2">
+        <% @insights.each do |insight| %>
+          <div class="bg-white border border-gray-100 rounded-2xl shadow-md p-5">
+            <div class="flex items-start justify-between gap-3">
+              <h3 class="text-lg font-semibold text-gray-900"><%= insight.title %></h3>
+
+              <% if insight.severity.present? %>
+                <span class="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600 capitalize">
+                  <%= insight.severity %>
+                </span>
+              <% end %>
+            </div>
+
+            <p class="mt-3 text-gray-700 whitespace-pre-line"><%= insight.body %></p>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="bg-white border border-gray-100 rounded-2xl shadow-md p-6 text-gray-500">
+        No insights yet. Add health records, then generate Copilot insights.
+      </div>
+    <% end %>
+  </section>
+
+  <!-- Recent Memories -->
+  <section>
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-2xl font-bold text-gray-900">Health Memories</h2>
+      <span class="text-sm text-gray-500"><%= @memories.count %> memories</span>
+    </div>
+
+    <% if @memories.any? %>
+      <div class="bg-white border border-gray-100 rounded-2xl shadow-md overflow-hidden">
+        <% @memories.each do |memory| %>
+          <div class="p-5 border-b border-gray-100 last:border-b-0">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+              <div>
+                <p class="text-xs uppercase tracking-wide text-indigo-600 font-semibold">
+                  <%= memory.category.to_s.humanize %>
+                </p>
+                <h3 class="text-base font-semibold text-gray-900 mt-1">
+                  <%= memory.title %>
+                </h3>
+              </div>
+
+              <% if memory.source_date.present? %>
+                <p class="text-sm text-gray-500">
+                  <%= memory.source_date.strftime("%B %d, %Y") %>
+                </p>
+              <% end %>
+            </div>
+
+            <p class="mt-2 text-gray-700">
+              <%= memory.value %>
+            </p>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="bg-white border border-gray-100 rounded-2xl shadow-md p-6 text-gray-500">
+        No health memories yet.
+      </div>
+    <% end %>
+  </section>
+</div>

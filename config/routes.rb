@@ -32,10 +32,14 @@ Rails.application.routes.draw do
     root to: "pages#home", as: :unauthenticated_root
   end
 
+  get "copilot", to: "copilot#index"
+
   # For the static page
   get "about", to: "pages#home"
 
   get "privacy", to: "pages#privacy", as: :privacy
   get "terms", to: "pages#terms", as: :terms
+
+
 end
 
