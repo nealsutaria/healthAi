@@ -13,6 +13,8 @@ module HealthCopilot
         @record.health_memories.destroy_all
 
         memories.each do |memory|
+          next if bad_memory?(memory)
+
           @record.health_memories.create!(
             user: @user,
             category: memory["category"],
@@ -23,6 +25,21 @@ module HealthCopilot
           )
         end
       end
+    end
+
+    private
+
+    def bad_memory?(memory)
+      title = memory["title"].to_s.strip.downcase
+      value = memory["value"].to_s.strip.downcase
+
+      title.blank? ||
+        value.blank? ||
+        value == "no" ||
+        value == "none" ||
+        value.include?("consult") ||
+        value.include?("healthcare provider") ||
+        value.include?("should be discussed")
     end
   end
 end
