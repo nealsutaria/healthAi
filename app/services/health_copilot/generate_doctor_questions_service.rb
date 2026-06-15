@@ -61,6 +61,10 @@ module HealthCopilot
         Do not infer who recommended something.
         If a follow-up is mentioned, say "your records mention a follow-up" instead of "your doctor recommended a follow-up."
 
+        If there is not enough history to identify a real pattern, do not force one.
+        Create simple doctor-prep questions based on the clearest individual symptoms, medications, tests, or follow-ups.
+        Do not connect unrelated issues together.
+
         Return ONLY valid JSON.
         Do not include markdown.
 

@@ -72,6 +72,7 @@ class RecordsController < ApplicationController
     @record.destroy!
     HealthCopilot::GenerateInsightsService.new(current_user).call
     HealthCopilot::GenerateDoctorQuestionsService.new(current_user).call
+    HealthCopilot::GenerateDoctorQuestionsService.new(current_user).call
 
     respond_to do |format|
       format.html { redirect_to records_path, status: :see_other, notice: "Record was successfully destroyed." }
