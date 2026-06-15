@@ -14,5 +14,7 @@ class CopilotController < ApplicationController
       current_user.health_insights.maximum(:updated_at),
       current_user.doctor_questions.maximum(:updated_at)
     ].compact.max
+
+    @recent_records = current_user.records.order(date: :desc).limit(5)
   end
 end
