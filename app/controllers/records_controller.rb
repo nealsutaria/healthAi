@@ -36,6 +36,7 @@ class RecordsController < ApplicationController
       if @record.save
         HealthCopilot::SaveRecordMemoriesService.new(@record).call
         HealthCopilot::GenerateInsightsService.new(current_user).call
+        HealthCopilot::GenerateDoctorQuestionsService.new(current_user).call
 
         format.html { redirect_to @record, notice: "Record was successfully created." }
         format.json { render :show, status: :created, location: @record }
@@ -54,6 +55,7 @@ class RecordsController < ApplicationController
       if @record.update(record_params)
         HealthCopilot::SaveRecordMemoriesService.new(@record).call
         HealthCopilot::GenerateInsightsService.new(current_user).call
+        HealthCopilot::GenerateDoctorQuestionsService.new(current_user).call
 
         format.html { redirect_to @record, notice: "Record was successfully updated." }
         format.json { render :show, status: :ok, location: @record }
@@ -68,6 +70,8 @@ class RecordsController < ApplicationController
   def destroy
     authorize_record!
     @record.destroy!
+    HealthCopilot::GenerateInsightsService.new(current_user).call
+    HealthCopilot::GenerateDoctorQuestionsService.new(current_user).call
 
     respond_to do |format|
       format.html { redirect_to records_path, status: :see_other, notice: "Record was successfully destroyed." }

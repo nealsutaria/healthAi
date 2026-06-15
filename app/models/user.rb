@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :messages, dependent: :destroy
   has_many :health_memories, dependent: :destroy
   has_many :health_insights, dependent: :destroy
+  has_many :doctor_questions, dependent: :destroy
 
   # Handles finding or creating a user from Google data
   def self.from_omniauth(auth)

@@ -1,90 +1,186 @@
 <% content_for :title, "AI Health Copilot" %>
 
-<div class="max-w-6xl mx-auto px-4 py-10">
-  <div class="mb-8">
-    <h1 class="text-4xl font-bold text-gray-900">🧠 AI Health Copilot</h1>
-    <p class="mt-2 text-sm text-gray-500">
-      Your Copilot reviews your saved health records and highlights patterns, follow-ups, and important health memories.
-    </p>
-  </div>
+<div class="min-h-screen bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
 
-  <!-- Safety note -->
-  <div class="mb-8 bg-blue-50 border border-blue-200 text-blue-800 px-4 py-3 rounded-xl">
-    <p class="text-sm">
-      MHBright does not provide medical diagnosis or treatment. Use these insights to prepare for conversations with your healthcare provider.
-    </p>
-  </div>
+    <!-- Header -->
+    <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-8 mb-8">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+        <div>
+          <div class="inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1 text-sm font-medium text-indigo-700 mb-4">
+            <span>🧠</span>
+            <span>AI Health Copilot</span>
+          </div>
 
-  <!-- Insights -->
-  <section class="mb-10">
-    <div class="flex items-center justify-between mb-4">
-      <h2 class="text-2xl font-bold text-gray-900">AI Insights</h2>
-      <span class="text-sm text-gray-500"><%= @insights.count %> insights</span>
+          <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-gray-950">
+            Your health history, understood.
+          </h1>
+
+          <p class="mt-4 max-w-2xl text-base text-gray-600">
+            MHBright reviews your saved records and surfaces important observations,
+            follow-ups, and patterns so you can feel more prepared for your next visit.
+          </p>
+        </div>
+
+        <div class="bg-gray-50 rounded-2xl p-5 border border-gray-100 min-w-[220px]">
+          <p class="text-sm text-gray-500">Copilot Status</p>
+          <p class="mt-1 text-2xl font-bold text-gray-900">Active</p>
+          <p class="mt-2 text-sm text-gray-500">
+            <%= @insights.count %> insights found
+          </p>
+        </div>
+      </div>
     </div>
 
-    <% if @insights.any? %>
-      <div class="grid gap-4 md:grid-cols-2">
-        <% @insights.each do |insight| %>
-          <div class="bg-white border border-gray-100 rounded-2xl shadow-md p-5">
-            <div class="flex items-start justify-between gap-3">
-              <h3 class="text-lg font-semibold text-gray-900"><%= insight.title %></h3>
+    <!-- Safety Note -->
+    <div class="mb-8 rounded-2xl border border-blue-100 bg-blue-50 px-5 py-4">
+      <p class="text-sm text-blue-800">
+        MHBright does not provide medical diagnosis or treatment. Use these insights to prepare for conversations with your healthcare provider.
+      </p>
+    </div>
 
-              <% if insight.severity.present? %>
-                <span class="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600 capitalize">
-                  <%= insight.severity %>
-                </span>
-              <% end %>
-            </div>
+    <!-- Summary + Stats -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+      <div class="lg:col-span-2 bg-white rounded-3xl shadow-sm border border-gray-100 p-6">
+        <p class="text-sm font-semibold text-indigo-700">Copilot Summary</p>
 
-            <p class="mt-3 text-gray-700 whitespace-pre-line"><%= insight.body %></p>
-          </div>
+        <% if @insights.any? %>
+          <h2 class="mt-2 text-2xl font-bold text-gray-950">
+            Your Copilot found <%= pluralize(@insights.count, "important observation") %>.
+          </h2>
+          <p class="mt-3 text-gray-600 leading-7">
+            These insights are generated from your saved health records and are meant to help you remember important details, identify patterns, and prepare for future doctor visits.
+          </p>
+        <% else %>
+          <h2 class="mt-2 text-2xl font-bold text-gray-950">
+            Add records to unlock your Copilot.
+          </h2>
+          <p class="mt-3 text-gray-600 leading-7">
+            Once you add health records, your Copilot will begin creating useful observations from your history.
+          </p>
         <% end %>
       </div>
-    <% else %>
-      <div class="bg-white border border-gray-100 rounded-2xl shadow-md p-6 text-gray-500">
-        No insights yet. Add health records, then generate Copilot insights.
-      </div>
-    <% end %>
-  </section>
 
-  <!-- Recent Memories -->
-  <section>
-    <div class="flex items-center justify-between mb-4">
-      <h2 class="text-2xl font-bold text-gray-900">Health Memories</h2>
-      <span class="text-sm text-gray-500"><%= @memories.count %> memories</span>
+      <div class="grid grid-cols-2 lg:grid-cols-1 gap-4">
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-5">
+          <p class="text-sm text-gray-500">Health Records</p>
+          <p class="mt-2 text-3xl font-bold text-gray-950"><%= current_user.records.count %></p>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-5">
+          <p class="text-sm text-gray-500">AI Insights</p>
+          <p class="mt-2 text-3xl font-bold text-gray-950"><%= @insights.count %></p>
+        </div>
+      </div>
     </div>
 
-    <% if @memories.any? %>
-      <div class="bg-white border border-gray-100 rounded-2xl shadow-md overflow-hidden">
-        <% @memories.each do |memory| %>
-          <div class="p-5 border-b border-gray-100 last:border-b-0">
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-              <div>
-                <p class="text-xs uppercase tracking-wide text-indigo-600 font-semibold">
-                  <%= memory.category.to_s.humanize %>
-                </p>
-                <h3 class="text-base font-semibold text-gray-900 mt-1">
-                  <%= memory.title %>
-                </h3>
+    <!-- Key Insights -->
+    <section>
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-5">
+        <div>
+          <p class="text-sm font-semibold text-indigo-700">Personalized Review</p>
+          <h2 class="mt-1 text-3xl font-bold tracking-tight text-gray-950">
+            Key Health Insights
+          </h2>
+        </div>
+
+        <p class="text-sm text-gray-500">
+          Generated from your saved health history
+        </p>
+      </div>
+
+      <% if @insights.any? %>
+        <div class="grid gap-5 md:grid-cols-2">
+          <% @insights.each do |insight| %>
+            <div class="group bg-white rounded-3xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition">
+              <div class="flex items-start justify-between gap-4">
+                <div class="h-11 w-11 rounded-2xl bg-indigo-50 flex items-center justify-center text-xl">
+                  ✨
+                </div>
+
+                <% if insight.severity.present? %>
+                  <span class="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-600 capitalize">
+                    <%= insight.severity %>
+                  </span>
+                <% end %>
               </div>
 
-              <% if memory.source_date.present? %>
-                <p class="text-sm text-gray-500">
-                  <%= memory.source_date.strftime("%B %d, %Y") %>
-                </p>
-              <% end %>
-            </div>
+              <h3 class="mt-5 text-xl font-bold text-gray-950">
+                <%= insight.title %>
+              </h3>
 
-            <p class="mt-2 text-gray-700">
-              <%= memory.value %>
-            </p>
+              <p class="mt-3 text-gray-600 leading-7 whitespace-pre-line">
+                <%= insight.body %>
+              </p>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-10 text-center">
+          <div class="mx-auto h-14 w-14 rounded-2xl bg-indigo-50 flex items-center justify-center text-2xl">
+            📝
           </div>
-        <% end %>
+
+          <h3 class="mt-5 text-xl font-bold text-gray-950">
+            No insights yet
+          </h3>
+
+          <p class="mt-2 text-gray-500">
+            Add a health record and your Copilot will begin generating insights.
+          </p>
+
+          <div class="mt-6">
+            <%= link_to "Add Health Record", new_record_path, class: "inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 transition" %>
+          </div>
+        </div>
+      <% end %>
+    </section>
+
+    <section class="mt-12">
+      <br>
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-5">
+        <div>
+          <p class="text-sm font-semibold text-indigo-700">Doctor Prep</p>
+          <h2 class="mt-1 text-3xl font-bold tracking-tight text-gray-950">
+            Questions for Your Doctor
+          </h2>
+        </div>
+
+        <p class="text-sm text-gray-500">
+          Generated from your health history
+        </p>
       </div>
-    <% else %>
-      <div class="bg-white border border-gray-100 rounded-2xl shadow-md p-6 text-gray-500">
-        No health memories yet.
-      </div>
-    <% end %>
+
+      <% if @doctor_questions.any? %>
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 divide-y divide-gray-100">
+          <% @doctor_questions.each do |doctor_question| %>
+            <div class="p-6 flex gap-4">
+              <div class="h-10 w-10 rounded-2xl bg-indigo-50 flex items-center justify-center text-lg flex-shrink-0">
+                ❓
+              </div>
+
+              <p class="text-gray-700 leading-7">
+                <%= doctor_question.question %>
+              </p>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-10 text-center">
+          <div class="mx-auto h-14 w-14 rounded-2xl bg-indigo-50 flex items-center justify-center text-2xl">
+            ❓
+          </div>
+
+          <h3 class="mt-5 text-xl font-bold text-gray-950">
+            No doctor questions yet
+          </h3>
+
+          <p class="mt-2 text-gray-500">
+            Add more health records and your Copilot will prepare questions for your next visit.
+          </p>
+        </div>
+      <% end %>
   </section>
+
+  </div>
 </div>
