@@ -86,3 +86,5 @@ gem 'mini_magick'
 
 gem "ruby_llm"
 
+# gem "sidekiq"
+

@@ -13,6 +13,7 @@
       <!-- Nav Links -->
       <div class="flex flex-wrap justify-center sm:justify-end items-center gap-3 sm:gap-4 text-sm">
         <% if user_signed_in? %>
+          <%= link_to "AI Copilot", copilot_path, class: "text-indigo-700 underline underline-offset-2 font-medium transition" %>
           <%= link_to "AI Health Chatbot", chat_path, class: "text-indigo-700 underline underline-offset-2 font-medium transition" %>
           <%= link_to "My Records", records_path, class: "text-indigo-700 underline underline-offset-2 font-medium transition" %>
           <%= link_to "➕ New Record", new_record_path, class: "text-white bg-indigo-500 hover:bg-indigo-400 px-4 py-2 rounded-lg shadow-sm font-medium" %>

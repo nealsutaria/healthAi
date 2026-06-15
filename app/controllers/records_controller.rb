@@ -37,7 +37,7 @@ class RecordsController < ApplicationController
         HealthCopilot::SaveRecordMemoriesService.new(@record).call
         HealthCopilot::GenerateInsightsService.new(current_user).call
         HealthCopilot::GenerateDoctorQuestionsService.new(current_user).call
-
+        # ProcessHealthRecordJob.perform_later(@record.id)
         format.html { redirect_to @record, notice: "Record was successfully created." }
         format.json { render :show, status: :created, location: @record }
       else
@@ -56,6 +56,7 @@ class RecordsController < ApplicationController
         HealthCopilot::SaveRecordMemoriesService.new(@record).call
         HealthCopilot::GenerateInsightsService.new(current_user).call
         HealthCopilot::GenerateDoctorQuestionsService.new(current_user).call
+        # ProcessHealthRecordJob.perform_later(@record.id)
 
         format.html { redirect_to @record, notice: "Record was successfully updated." }
         format.json { render :show, status: :ok, location: @record }
@@ -72,7 +73,7 @@ class RecordsController < ApplicationController
     @record.destroy!
     HealthCopilot::GenerateInsightsService.new(current_user).call
     HealthCopilot::GenerateDoctorQuestionsService.new(current_user).call
-    HealthCopilot::GenerateDoctorQuestionsService.new(current_user).call
+    # RefreshHealthCopilotJob.perform_later(current_user.id)
 
     respond_to do |format|
       format.html { redirect_to records_path, status: :see_other, notice: "Record was successfully destroyed." }
