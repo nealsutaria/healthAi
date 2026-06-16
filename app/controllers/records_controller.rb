@@ -120,7 +120,7 @@ class RecordsController < ApplicationController
       base64_image = Base64.strict_encode64(image.to_blob)
 
       api_key = Rails.application.credentials.gemini_api_key
-      uri = URI("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=#{api_key}")
+      uri = URI("https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=#{api_key}")
 
       body = {
         contents: [
@@ -178,7 +178,7 @@ class RecordsController < ApplicationController
 
     def fetch_gemini_response(prompt)
       api_key = Rails.application.credentials.gemini_api_key
-      uri = URI("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=#{api_key}")
+      uri = URI("https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=#{api_key}")
       headers = { "Content-Type" => "application/json" }
       body = {
         contents: [{ parts: [{ text: prompt }] }]
