@@ -5,8 +5,9 @@
     <h1 class="text-xl sm:text-4xl font-extrabold text-gray-900 leading-snug tracking-tight mb-2">
       Your Health Records, Smarter.
     </h1>
+
     <p class="text-xs sm:text-base text-gray-600 mb-4 leading-snug">
-      MHBright is your AI-powered health dashboard — track visits, upload results, and get personalized insights.
+      MHBright is your AI-powered health dashboard — track visits, upload results, generate insights, and prepare for doctor appointments.
     </p>
 
     <!-- CTA Buttons -->
@@ -23,18 +24,26 @@
   <section class="w-full max-w-md sm:max-w-5xl mt-4 sm:mt-8 pb-4 sm:pb-10">
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-2 sm:gap-4">
       <% features = [
-        ["🧠", "AI Doctor Suggestions", "AI alerts based on symptoms & visits."],
+        ["🧠", "AI Health Copilot", "Finds patterns, follow-ups, and insights."],
+        ["🩺", "Appointment Prep Agent", "Creates focused briefs for doctor visits."],
+        ["❓", "Doctor Questions", "Generates questions from your records."],
         ["📸", "Image Scan Insights", "Upload results — AI explains them."],
         ["💬", "24/7 AI Chat", "Ask health questions anytime."],
-        ["🔒", "Secure & Private", "End-to-end encrypted. No ads."],
-        ["💊", "Smart Records", "Organized, accessible health data."]
+        ["💊", "Smart Records", "Visits, meds, tests, and notes in one place."],
+        ["🔒", "Secure & Private", "End-to-end encrypted. No ads."]
       ] %>
 
       <% features.each do |icon, title, desc| %>
         <div class="bg-gray-50 rounded-lg p-3 sm:p-4 text-center border hover:shadow transition">
           <div class="text-xl sm:text-2xl mb-1"><%= icon %></div>
-          <h3 class="text-[11px] sm:text-sm font-semibold text-gray-900 mb-0.5 leading-tight"><%= title %></h3>
-          <p class="text-[10px] sm:text-xs text-gray-600 leading-tight"><%= desc %></p>
+
+          <h3 class="text-[11px] sm:text-sm font-semibold text-gray-900 mb-0.5 leading-tight">
+            <%= title %>
+          </h3>
+
+          <p class="text-[10px] sm:text-xs text-gray-600 leading-tight">
+            <%= desc %>
+          </p>
         </div>
       <% end %>
     </div>
