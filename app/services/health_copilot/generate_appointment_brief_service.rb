@@ -62,14 +62,14 @@ module HealthCopilot
         - what to monitor
         - whether additional assessment is needed
 
-Do not suggest treatment options.
-Questions should focus on understanding symptoms, next steps, and what information to bring.
+        Do not suggest treatment options.
+        Questions should focus on understanding symptoms, next steps, and what information to bring.
 
         Format the brief with these sections:
 
         Appointment Brief: #{@topic}
 
-        1. Main Topics to Discuss
+        1. Main Topics to Discusss
         2. Relevant Health History
         3. Medications, Tests, or Follow-ups Mentioned
         4. Questions You May Want to Ask

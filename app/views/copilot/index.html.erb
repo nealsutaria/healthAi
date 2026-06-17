@@ -39,6 +39,45 @@
       </p>
     </div>
 
+    <!-- Appointment Prep Agent -->
+    <div class="mb-10 bg-white rounded-3xl shadow-sm border border-gray-100 p-6">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+        <div>
+          <div class="inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1 text-sm font-medium text-indigo-700 mb-4">
+            <span>🩺</span>
+            <span>Appointment Prep Agent</span>
+          </div>
+
+          <h2 class="text-2xl font-bold text-gray-950">
+            Prepare for your next doctor visit
+          </h2>
+
+          <p class="mt-2 text-gray-600 leading-7 max-w-2xl">
+            Enter an appointment topic like shoulder pain, headaches, blood pressure, or lab results.
+            Your Copilot will search your health memories and generate a focused appointment brief.
+          </p>
+        </div>
+
+        <%= form_with url: appointment_briefs_path, method: :post, local: true, class: "w-full lg:max-w-md" do |form| %>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <%= form.text_field :topic,
+                  placeholder: "e.g. shoulder pain",
+                  class: "w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:border-indigo-500 focus:ring-indigo-500" %>
+
+            <%= form.submit "Generate Brief",
+                  class: "rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white hover:bg-indigo-500 transition cursor-pointer" %>
+          </div>
+        <% end %>
+        <div class="mt-4">
+          <%= link_to "View saved appointment briefs →",
+                appointment_briefs_path,
+                class: "text-sm font-semibold text-indigo-700 hover:text-indigo-600" %>
+        </div>
+      </div>
+    </div>
+
+
+
     <!-- Summary + Stats -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
       <div class="lg:col-span-2 bg-white rounded-3xl shadow-sm border border-gray-100 p-6">
