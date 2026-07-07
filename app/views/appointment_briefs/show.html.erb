@@ -23,6 +23,18 @@
         <p class="mt-3 text-sm text-gray-500">
           Generated <%= @appointment_brief.created_at.strftime("%b %d, %Y %l:%M %p") %>
         </p>
+
+        <div class="mt-5 flex flex-col sm:flex-row gap-3">
+          <%= button_to "Regenerate Brief",
+                regenerate_appointment_brief_path(@appointment_brief),
+                method: :post,
+                form: { data: { turbo_confirm: "Regenerate this brief with the latest related health memories?" } },
+                class: "inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white hover:bg-indigo-500 transition" %>
+
+          <%= link_to "View All Briefs",
+                appointment_briefs_path,
+                class: "inline-flex items-center justify-center rounded-xl bg-gray-100 px-5 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-200 transition" %>
+        </div>
       </div>
 
       <div class="rounded-2xl border border-blue-100 bg-blue-50 px-5 py-4 mb-8">

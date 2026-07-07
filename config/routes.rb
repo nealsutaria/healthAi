@@ -34,7 +34,9 @@ Rails.application.routes.draw do
 
   get "copilot", to: "copilot#index"
 
-  resources :appointment_briefs, only: [:index, :show, :create, :destroy]
+  resources :appointment_briefs, only: [:index, :show, :create, :destroy] do
+    post :regenerate, on: :member
+  end
 
   # For the static page
   get "about", to: "pages#home"
