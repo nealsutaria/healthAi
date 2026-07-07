@@ -1,0 +1,87 @@
+<% content_for :title, "Prior Auth Drafts" %>
+
+<div class="min-h-screen bg-gray-50">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+    <div class="mb-6">
+      <%= link_to "← Back to Clinic Dashboard",
+            clinic_organization_path(@organization),
+            class: "text-sm font-semibold text-indigo-700 hover:text-indigo-600" %>
+    </div>
+
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+      <div>
+        <p class="text-sm font-semibold text-indigo-700"><%= @organization.name %></p>
+        <h1 class="mt-2 text-4xl font-bold tracking-tight text-gray-950">
+          Prior Auth Drafts
+        </h1>
+        <p class="mt-2 text-gray-600">
+          View and manage AI-generated prior authorization preparation packets.
+        </p>
+      </div>
+
+      <%= link_to "New Prior Auth Packet",
+            new_clinic_organization_prior_auth_draft_path(@organization),
+            class: "inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white hover:bg-indigo-500 transition" %>
+    </div>
+
+    <% if @prior_auth_drafts.any? %>
+      <div class="bg-white rounded-3xl shadow-sm border border-gray-100 divide-y divide-gray-100">
+        <% @prior_auth_drafts.each do |draft| %>
+          <div class="p-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div>
+              <p class="text-sm font-semibold text-indigo-700">
+                <%= draft.insurance_payer %>
+              </p>
+
+              <h2 class="mt-1 text-xl font-bold text-gray-950">
+                <%= draft.requested_service %> for <%= draft.patient_name %>
+              </h2>
+
+              <p class="mt-2 text-sm text-gray-500">
+                <span class="font-semibold">Condition:</span> <%= draft.condition %>
+              </p>
+
+              <p class="mt-1 text-sm text-gray-500">
+                Generated <%= draft.created_at.strftime("%b %d, %Y %l:%M %p") %>
+              </p>
+            </div>
+
+            <div class="flex items-center gap-3 flex-shrink-0">
+              <%= link_to "View",
+                    clinic_organization_prior_auth_draft_path(@organization, draft),
+                    class: "inline-flex items-center justify-center rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500 transition" %>
+
+              <%= button_to "Delete",
+                    clinic_organization_prior_auth_draft_path(@organization, draft),
+                    method: :delete,
+                    form: { data: { turbo_confirm: "Delete this prior auth draft?" } },
+                    class: "inline-flex items-center justify-center rounded-xl bg-red-50 px-4 py-2 text-sm font-semibold text-red-700 hover:bg-red-100 transition" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-10 text-center">
+        <div class="mx-auto h-14 w-14 rounded-2xl bg-indigo-50 flex items-center justify-center text-2xl">
+          🧾
+        </div>
+
+        <h2 class="mt-5 text-xl font-bold text-gray-950">
+          No prior auth drafts yet
+        </h2>
+
+        <p class="mt-2 text-gray-500">
+          Generate your first prior authorization preparation packet.
+        </p>
+
+        <div class="mt-6">
+          <%= link_to "New Prior Auth Packet",
+                new_clinic_organization_prior_auth_draft_path(@organization),
+                class: "inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white hover:bg-indigo-500 transition" %>
+        </div>
+      </div>
+    <% end %>
+
+  </div>
+</div>

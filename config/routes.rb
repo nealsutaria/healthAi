@@ -38,6 +38,12 @@ Rails.application.routes.draw do
     post :regenerate, on: :member
   end
 
+  namespace :clinic do
+    resources :organizations, only: [:index, :new, :create, :show] do
+      resources :prior_auth_drafts, only: [:index, :new, :create, :show, :edit, :update, :destroy]
+    end
+  end
+
   # For the static page
   get "about", to: "pages#home"
 

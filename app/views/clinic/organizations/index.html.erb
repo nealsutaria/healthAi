@@ -1,0 +1,65 @@
+<% content_for :title, "Clinic Organizations" %>
+
+<div class="min-h-screen bg-gray-50">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+      <div>
+        <p class="text-sm font-semibold text-indigo-700">Clinic Portal</p>
+        <h1 class="mt-2 text-4xl font-bold tracking-tight text-gray-950">
+          Your Clinics
+        </h1>
+        <p class="mt-2 text-gray-600">
+          Manage clinic workspaces and AI-powered administrative agents.
+        </p>
+      </div>
+
+      <%= link_to "Create Clinic",
+            new_clinic_organization_path,
+            class: "inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white hover:bg-indigo-500 transition" %>
+    </div>
+
+    <% if @organizations.any? %>
+      <div class="bg-white rounded-3xl shadow-sm border border-gray-100 divide-y divide-gray-100">
+        <% @organizations.each do |organization| %>
+          <div class="p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <h2 class="text-xl font-bold text-gray-950">
+                <%= organization.name %>
+              </h2>
+
+              <p class="mt-1 text-sm text-gray-500">
+                Created <%= organization.created_at.strftime("%b %d, %Y") %>
+              </p>
+            </div>
+
+            <%= link_to "Open Dashboard",
+                  clinic_organization_path(organization),
+                  class: "inline-flex items-center justify-center rounded-xl bg-gray-100 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-200 transition" %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-10 text-center">
+        <div class="mx-auto h-14 w-14 rounded-2xl bg-indigo-50 flex items-center justify-center text-2xl">
+          🏥
+        </div>
+
+        <h2 class="mt-5 text-xl font-bold text-gray-950">
+          No clinics yet
+        </h2>
+
+        <p class="mt-2 text-gray-500">
+          Create a clinic workspace to start using clinic-facing AI agents.
+        </p>
+
+        <div class="mt-6">
+          <%= link_to "Create Clinic",
+                new_clinic_organization_path,
+                class: "inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white hover:bg-indigo-500 transition" %>
+        </div>
+      </div>
+    <% end %>
+
+  </div>
+</div>

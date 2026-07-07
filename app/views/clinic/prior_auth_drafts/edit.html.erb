@@ -1,0 +1,93 @@
+<% content_for :title, "Edit Prior Auth Packet" %>
+
+<div class="min-h-screen bg-gray-50">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+    <div class="mb-6">
+      <%= link_to "← Back to Prior Auth Packet",
+            clinic_organization_prior_auth_draft_path(@organization, @prior_auth_draft),
+            class: "text-sm font-semibold text-indigo-700 hover:text-indigo-600" %>
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-8">
+      <div class="mb-8">
+        <p class="text-sm font-semibold text-indigo-700"><%= @organization.name %></p>
+
+        <h1 class="mt-2 text-4xl font-bold tracking-tight text-gray-950">
+          Edit Prior Auth Details
+        </h1>
+
+        <p class="mt-3 text-gray-600 leading-7">
+          Update the clinical context below. When you save, MHBright will regenerate the prior authorization packet using the latest details.
+        </p>
+      </div>
+
+      <%= form_with model: [:clinic, @organization, @prior_auth_draft], local: true do |form| %>
+        <% if @prior_auth_draft.errors.any? %>
+          <div class="mb-6 rounded-2xl border border-red-100 bg-red-50 px-5 py-4">
+            <p class="text-sm font-semibold text-red-700">
+              Please fill out the required fields.
+            </p>
+          </div>
+        <% end %>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div>
+            <%= form.label :patient_name, "Patient name", class: "block text-sm font-semibold text-gray-700 mb-2" %>
+            <%= form.text_field :patient_name,
+                  class: "w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:border-indigo-500 focus:ring-indigo-500" %>
+          </div>
+
+          <div>
+            <%= form.label :insurance_payer, "Insurance payer", class: "block text-sm font-semibold text-gray-700 mb-2" %>
+            <%= form.text_field :insurance_payer,
+                  class: "w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:border-indigo-500 focus:ring-indigo-500" %>
+          </div>
+
+          <div>
+            <%= form.label :condition, "Condition / concern", class: "block text-sm font-semibold text-gray-700 mb-2" %>
+            <%= form.text_field :condition,
+                  class: "w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:border-indigo-500 focus:ring-indigo-500" %>
+          </div>
+
+          <div>
+            <%= form.label :requested_service, "Requested service", class: "block text-sm font-semibold text-gray-700 mb-2" %>
+            <%= form.text_field :requested_service,
+                  class: "w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:border-indigo-500 focus:ring-indigo-500" %>
+          </div>
+        </div>
+
+        <div class="mt-5">
+          <%= form.label :prior_treatments, "Prior treatments tried", class: "block text-sm font-semibold text-gray-700 mb-2" %>
+          <%= form.text_area :prior_treatments,
+                rows: 4,
+                class: "w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:border-indigo-500 focus:ring-indigo-500" %>
+        </div>
+
+        <div class="mt-5">
+          <%= form.label :clinical_notes, "Clinical notes", class: "block text-sm font-semibold text-gray-700 mb-2" %>
+          <%= form.text_area :clinical_notes,
+                rows: 5,
+                class: "w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:border-indigo-500 focus:ring-indigo-500" %>
+        </div>
+
+        <div class="mt-5">
+          <%= form.label :tests_or_imaging, "Tests or imaging", class: "block text-sm font-semibold text-gray-700 mb-2" %>
+          <%= form.text_area :tests_or_imaging,
+                rows: 4,
+                class: "w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:border-indigo-500 focus:ring-indigo-500" %>
+        </div>
+
+        <div class="mt-8 flex flex-col sm:flex-row gap-3">
+          <%= form.submit "Save and Regenerate Packet",
+                class: "inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white hover:bg-indigo-500 transition cursor-pointer" %>
+
+          <%= link_to "Cancel",
+                clinic_organization_prior_auth_draft_path(@organization, @prior_auth_draft),
+                class: "inline-flex items-center justify-center rounded-xl bg-gray-100 px-5 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-200 transition" %>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+</div>

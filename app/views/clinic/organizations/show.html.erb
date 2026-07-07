@@ -1,0 +1,94 @@
+<% content_for :title, @organization.name %>
+
+<div class="min-h-screen bg-gray-50">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+    <div class="mb-6">
+      <%= link_to "← Back to Clinics",
+            clinic_organizations_path,
+            class: "text-sm font-semibold text-indigo-700 hover:text-indigo-600" %>
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-8 mb-8">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+        <div>
+          <div class="inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1 text-sm font-medium text-indigo-700 mb-4">
+            <span>🏥</span>
+            <span>Clinic Workspace</span>
+          </div>
+
+          <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-gray-950">
+            <%= @organization.name %>
+          </h1>
+
+          <p class="mt-4 max-w-2xl text-gray-600 leading-7">
+            Use clinic-facing AI agents to prepare documentation, summarize patient context,
+            and reduce administrative work.
+          </p>
+        </div>
+
+        <div class="bg-gray-50 rounded-2xl p-5 border border-gray-100 min-w-[220px]">
+          <p class="text-sm text-gray-500">Workspace Status</p>
+          <p class="mt-1 text-2xl font-bold text-gray-900">Active</p>
+          <p class="mt-2 text-sm text-gray-500">
+            Clinic tools enabled
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-5">
+        <div>
+          <p class="text-sm font-semibold text-indigo-700">Business Agents</p>
+          <h2 class="mt-1 text-3xl font-bold tracking-tight text-gray-950">
+            Clinic AI Tools
+          </h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-6">
+          <div class="h-11 w-11 rounded-2xl bg-indigo-50 flex items-center justify-center text-xl">
+            🧾
+          </div>
+
+          <h3 class="mt-5 text-xl font-bold text-gray-950">
+            Prior Auth Prep Agent
+          </h3>
+
+          <p class="mt-3 text-gray-600 leading-7">
+            Generate prior authorization prep packets, documentation checklists,
+            and draft payer letters from clinical context.
+          </p>
+
+          <%= link_to "Open Prior Auth Agent",
+            clinic_organization_prior_auth_drafts_path(@organization),
+            class: "inline-flex items-center justify-center rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500 transition" %>
+
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-6">
+          <div class="h-11 w-11 rounded-2xl bg-indigo-50 flex items-center justify-center text-xl">
+            📋
+          </div>
+
+          <h3 class="mt-5 text-xl font-bold text-gray-950">
+            Intake Summary Agent
+          </h3>
+
+          <p class="mt-3 text-gray-600 leading-7">
+            Turn messy patient intake information into a clean provider-ready summary.
+          </p>
+
+          <div class="mt-6">
+            <span class="inline-flex items-center justify-center rounded-xl bg-gray-100 px-4 py-2 text-sm font-semibold text-gray-500">
+              Planned
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>

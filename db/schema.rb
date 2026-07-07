@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_06_18_080818) do
+ActiveRecord::Schema[7.1].define(version: 2026_07_07_160308) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -90,6 +90,16 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_18_080818) do
     t.index ["user_id"], name: "index_health_memories_on_user_id"
   end
 
+  create_table "memberships", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "organization_id", null: false
+    t.string "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_memberships_on_organization_id"
+    t.index ["user_id"], name: "index_memberships_on_user_id"
+  end
+
   create_table "messages", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "role"
@@ -97,6 +107,30 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_18_080818) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
+  create_table "organizations", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "prior_auth_drafts", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.bigint "user_id", null: false
+    t.string "patient_name"
+    t.string "condition"
+    t.string "requested_service"
+    t.string "insurance_payer"
+    t.text "prior_treatments"
+    t.text "clinical_notes"
+    t.text "tests_or_imaging"
+    t.text "content"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_prior_auth_drafts_on_organization_id"
+    t.index ["user_id"], name: "index_prior_auth_drafts_on_user_id"
   end
 
   create_table "records", force: :cascade do |t|
@@ -138,6 +172,10 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_18_080818) do
   add_foreign_key "health_insights", "users"
   add_foreign_key "health_memories", "records"
   add_foreign_key "health_memories", "users"
+  add_foreign_key "memberships", "organizations"
+  add_foreign_key "memberships", "users"
   add_foreign_key "messages", "users"
+  add_foreign_key "prior_auth_drafts", "organizations"
+  add_foreign_key "prior_auth_drafts", "users"
   add_foreign_key "records", "users"
 end
