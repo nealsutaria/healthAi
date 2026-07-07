@@ -37,6 +37,13 @@ module HealthCopilot
         Do not suggest possible diagnoses unless explicitly provided.
         Do not say “medically necessary”; say “documentation may support the request” or “clinical rationale based on provided notes.”
 
+        - Do not assume a diagnosis, deficiency, anemia, injury, failed treatment, or clinical need unless explicitly provided.
+        - If a requested service usually requires certain evidence, list that evidence under Missing Information instead of assuming it exists.
+        - Do not say "medically necessary" unless the provided notes explicitly support that phrase.
+        - Prefer "documentation may support the request if..." or "the request may require documentation showing..."
+        - Preserve diagnosis wording from the input, but if the wording appears misspelled, add "verify diagnosis spelling" under Missing Information.
+        - Do not invent CPT codes, ICD-10 codes, provider names, dates, lab values, addresses, or member IDs.
+
         Use only the information provided below.
         Do not invent facts.
         Do not claim a service is medically necessary unless the provided notes support that wording.
