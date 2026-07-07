@@ -30,6 +30,8 @@ module Clinic
     end
 
     def show
+      @prior_auth_drafts = @organization.prior_auth_drafts.order(created_at: :desc).limit(3)
+      @prior_auth_drafts_count = @organization.prior_auth_drafts.count
     end
 
     private
