@@ -9,15 +9,17 @@
         class: "text-sm font-semibold text-indigo-700 hover:text-indigo-600" %>
 
       <div class="flex flex-col sm:flex-row gap-3">
-        <%= link_to "Edit Details",
-          edit_clinic_organization_prior_auth_draft_path(@organization, @prior_auth_draft),
-          class: "inline-flex items-center justify-center rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500 transition" %>
+          <% if @current_membership&.can_manage_prior_auth_drafts? %>
+          <%= link_to "Edit Details",
+            edit_clinic_organization_prior_auth_draft_path(@organization, @prior_auth_draft),
+            class: "inline-flex items-center justify-center rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500 transition" %>
 
-        <%= button_to "Delete Draft",
-          clinic_organization_prior_auth_draft_path(@organization, @prior_auth_draft),
-          method: :delete,
-          form: { data: { turbo_confirm: "Delete this prior auth draft?" } },
-          class: "inline-flex items-center justify-center rounded-xl bg-red-50 px-4 py-2 text-sm font-semibold text-red-700 hover:bg-red-100 transition" %>
+          <%= button_to "Delete Draft",
+            clinic_organization_prior_auth_draft_path(@organization, @prior_auth_draft),
+            method: :delete,
+            form: { data: { turbo_confirm: "Delete this prior auth draft?" } },
+            class: "inline-flex items-center justify-center rounded-xl bg-red-50 px-4 py-2 text-sm font-semibold text-red-700 hover:bg-red-100 transition" %>
+          <% end %>
       </div>
     </div>
 

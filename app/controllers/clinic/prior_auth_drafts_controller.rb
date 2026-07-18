@@ -7,6 +7,7 @@ module Clinic
     before_action :require_prior_auth_manage_access!, only: [:new, :create, :edit, :update, :destroy]
 
     def index
+      @current_membership = current_user.memberships.find_by(organization: @organization)
       @prior_auth_drafts = @organization.prior_auth_drafts.order(created_at: :desc)
     end
 
@@ -33,6 +34,7 @@ module Clinic
     end
 
     def show
+      @current_membership = current_user.memberships.find_by(organization: @organization)
     end
 
     def destroy

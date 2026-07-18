@@ -20,9 +20,11 @@
         </p>
       </div>
 
-      <%= link_to "New Prior Auth Packet",
-            new_clinic_organization_prior_auth_draft_path(@organization),
-            class: "inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white hover:bg-indigo-500 transition" %>
+      <% if @current_membership&.can_manage_prior_auth_drafts? %>
+        <%= link_to "New Prior Auth Packet",
+              new_clinic_organization_prior_auth_draft_path(@organization),
+              class: "inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white hover:bg-indigo-500 transition" %>
+      <% end %>
     </div>
 
     <% if @prior_auth_drafts.any? %>
@@ -52,11 +54,13 @@
                     clinic_organization_prior_auth_draft_path(@organization, draft),
                     class: "inline-flex items-center justify-center rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500 transition" %>
 
-              <%= button_to "Delete",
-                    clinic_organization_prior_auth_draft_path(@organization, draft),
-                    method: :delete,
-                    form: { data: { turbo_confirm: "Delete this prior auth draft?" } },
-                    class: "inline-flex items-center justify-center rounded-xl bg-red-50 px-4 py-2 text-sm font-semibold text-red-700 hover:bg-red-100 transition" %>
+             <% if @current_membership&.can_manage_prior_auth_drafts? %>
+               <%= button_to "Delete",
+                      clinic_organization_prior_auth_draft_path(@organization, draft),
+                      method: :delete,
+                      form: { data: { turbo_confirm: "Delete this prior auth draft?" } },
+                      class: "inline-flex items-center justify-center rounded-xl bg-red-50 px-4 py-2 text-sm font-semibold text-red-700 hover:bg-red-100 transition" %>
+            <% end %>
             </div>
           </div>
         <% end %>
