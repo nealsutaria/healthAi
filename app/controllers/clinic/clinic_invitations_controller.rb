@@ -13,8 +13,13 @@ module Clinic
       @clinic_invitation.invited_by = current_user
 
       if @clinic_invitation.save
+        ClinicInvitationMailer
+          .with(clinic_invitation: @clinic_invitation)
+          .invite
+          .deliver_now
+
         redirect_to clinic_organization_memberships_path(@organization),
-                    notice: "Invitation created."
+                    notice: "Invitation created and email sent."
       else
         render :new, status: :unprocessable_entity
       end

@@ -3,6 +3,8 @@ module Clinic
     before_action :authenticate_user!
     before_action :set_organization
     before_action :set_prior_auth_draft, only: [:show, :edit, :update, :destroy]
+    before_action :require_prior_auth_view_access!
+    before_action :require_prior_auth_manage_access!, only: [:new, :create, :edit, :update, :destroy]
 
     def index
       @prior_auth_drafts = @organization.prior_auth_drafts.order(created_at: :desc)
@@ -75,6 +77,23 @@ module Clinic
         :clinical_notes,
         :tests_or_imaging
       )
+    end
+    def current_membership
+      @current_membership ||= current_user.memberships.find_by(organization: @organization)
+    end
+
+    def require_prior_auth_view_access!
+      unless current_membership&.can_view_prior_auth_drafts?
+        redirect_to clinic_organizations_path,
+                    alert: "You do not have access to this clinic."
+      end
+    end
+
+    def require_prior_auth_manage_access!
+      unless current_membership&.can_manage_prior_auth_drafts?
+        redirect_to clinic_organization_prior_auth_drafts_path(@organization),
+                    alert: "You do not have permission to manage prior authorization drafts."
+      end
     end
   end
 end
