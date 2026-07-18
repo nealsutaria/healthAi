@@ -54,6 +54,16 @@ Rails.application.routes.draw do
   get "privacy", to: "pages#privacy", as: :privacy
   get "terms", to: "pages#terms", as: :terms
 
+  namespace :api do
+    namespace :v1 do
+      post "login", to: "sessions#create"
+      delete "logout", to: "sessions#destroy"
+      resources :records, only: [:index, :show, :create, :update, :destroy] do
+        post :analyze_image, on: :member
+      end
+    end
+  end
+
 
 end
 

@@ -107,53 +107,12 @@ class RecordsController < ApplicationController
   def analyze_image
     authorize_record!
 
-    unless @record.image.attached?
-      redirect_to @record, alert: "No image attached to analyze."
-      return
-    end
+    result = HealthCopilot::AnalyzeRecordImageService.new(@record).call
 
-    begin
-      # Download image and resize
-      downloaded_file = URI.open(@record.image.url)
-      image = MiniMagick::Image.read(downloaded_file)
-      image.resize "800x800>"
-      base64_image = Base64.strict_encode64(image.to_blob)
-
-      api_key = Rails.application.credentials.gemini_api_key
-      uri = URI("https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=#{api_key}")
-
-      body = {
-        contents: [
-          {
-            parts: [
-              { text: "Please analyze and explain this medical image clearly." },
-              {
-                inline_data: {
-                  mime_type: "image/jpeg",
-                  data: base64_image
-                }
-              }
-            ]
-          }
-        ]
-      }
-
-      headers = { "Content-Type" => "application/json" }
-
-      response = Net::HTTP.post(uri, body.to_json, headers)
-      json = JSON.parse(response.body)
-
-      result = json.dig("candidates", 0, "content", "parts", 0, "text")
-      if result.present?
-        @record.update(analysis: result)
-        flash[:notice] = "Image analyzed successfully."
-      else
-        flash[:alert] = "Gemini could not analyze the image."
-        Rails.logger.error "Gemini error: #{json.inspect}"
-      end
-    rescue => e
-      Rails.logger.error "Gemini image analysis failed: #{e.message}"
-      flash[:alert] = "Something went wrong while analyzing the image."
+    if result[:success]
+      flash[:notice] = "Image analyzed successfully."
+    else
+      flash[:alert] = result[:error]
     end
 
     redirect_to @record

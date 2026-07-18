@@ -32,6 +32,13 @@ class User < ApplicationRecord
       # user.skip_confirmation!
     end
   end
+
+  def ensure_api_token!
+    return api_token if api_token.present?
+
+    update!(api_token: SecureRandom.hex(32))
+    api_token
+  end
 end
 
 
