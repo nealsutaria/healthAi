@@ -16,6 +16,11 @@ class User < ApplicationRecord
   has_many :organizations, through: :memberships
   has_many :prior_auth_drafts, dependent: :destroy
 
+  has_many :sent_clinic_invitations,
+         class_name: "ClinicInvitation",
+         foreign_key: "invited_by_id",
+         dependent: :destroy
+
   # Handles finding or creating a user from Google data
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

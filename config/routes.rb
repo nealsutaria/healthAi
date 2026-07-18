@@ -40,8 +40,12 @@ Rails.application.routes.draw do
 
   namespace :clinic do
     resources :organizations, only: [:index, :new, :create, :show] do
+      resources :memberships, only: [:index, :destroy]
+      resources :clinic_invitations, only: [:new, :create, :destroy]
       resources :prior_auth_drafts, only: [:index, :new, :create, :show, :edit, :update, :destroy]
     end
+    get "invitations/:token", to: "invitation_acceptances#show", as: :invitation_acceptance
+    post "invitations/:token/accept", to: "invitation_acceptances#create", as: :accept_invitation
   end
 
   # For the static page

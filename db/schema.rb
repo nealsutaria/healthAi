@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_07_07_160308) do
+ActiveRecord::Schema[7.1].define(version: 2026_07_18_074357) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,6 +50,19 @@ ActiveRecord::Schema[7.1].define(version: 2026_07_07_160308) do
     t.datetime "updated_at", null: false
     t.string "topic"
     t.index ["user_id"], name: "index_appointment_briefs_on_user_id"
+  end
+
+  create_table "clinic_invitations", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.bigint "invited_by_id", null: false
+    t.string "email"
+    t.string "role"
+    t.string "token"
+    t.datetime "accepted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["invited_by_id"], name: "index_clinic_invitations_on_invited_by_id"
+    t.index ["organization_id"], name: "index_clinic_invitations_on_organization_id"
   end
 
   create_table "doctor_questions", force: :cascade do |t|
@@ -167,6 +180,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_07_07_160308) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "appointment_briefs", "users"
+  add_foreign_key "clinic_invitations", "organizations"
+  add_foreign_key "clinic_invitations", "users", column: "invited_by_id"
   add_foreign_key "doctor_questions", "users"
   add_foreign_key "health_insights", "records"
   add_foreign_key "health_insights", "users"
