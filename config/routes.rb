@@ -74,6 +74,7 @@ Rails.application.routes.draw do
         end
       end
       resources :health_insights, only: [:index]
+      resources :health_memories, only: [:index]
     end
   end
 end
