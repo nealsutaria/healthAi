@@ -71,6 +71,7 @@ Rails.application.routes.draw do
           post :regenerate
         end
       end
+      resources :health_insights, only: [:index]
     end
   end
 end
