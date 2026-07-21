@@ -66,6 +66,11 @@ Rails.application.routes.draw do
       get "/chat/messages", to: "chat_messages#index"
       post "/chat/messages", to: "chat_messages#create"
       delete "/chat/messages", to: "chat_messages#destroy_all"
+      resources :appointment_briefs, only: [:index, :show, :create, :destroy] do
+        member do
+          post :regenerate
+        end
+      end
     end
   end
 end
