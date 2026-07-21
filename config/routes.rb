@@ -59,11 +59,14 @@ Rails.application.routes.draw do
       post "login", to: "sessions#create"
       delete "logout", to: "sessions#destroy"
       resources :records, only: [:index, :show, :create, :update, :destroy] do
-        post :analyze_image, on: :member
+        member do
+          post :analyze_image
+        end
       end
+      get "/chat/messages", to: "chat_messages#index"
+      post "/chat/messages", to: "chat_messages#create"
+      delete "/chat/messages", to: "chat_messages#destroy_all"
     end
   end
-
-
 end
 
